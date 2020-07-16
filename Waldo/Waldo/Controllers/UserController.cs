@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Waldo.Entity;
 using Waldo.Service;
@@ -15,6 +16,7 @@ namespace Waldo.Controllers
     public class UserController : ControllerBase
     {
         // GET: api/values
+        [EnableCors("TestPolicy")]
         [HttpGet]
         public IEnumerable<User> Get()
         {
@@ -23,6 +25,7 @@ namespace Waldo.Controllers
         }
 
         // GET api/values/5
+        [EnableCors("TestPolicy")]
         [HttpGet("{id}")]
         public string Get(int id)
         {

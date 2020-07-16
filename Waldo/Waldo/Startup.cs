@@ -25,6 +25,17 @@ namespace Waldo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //We have to use this policy to let the localhost:8100 from ionic access our data here
+            //Used in the UserController
+            services.AddCors(options =>
+            {
+                options.AddPolicy("TestPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:8100");
+                    });
+            });
+
             services.AddControllers();
         }
 
@@ -39,6 +50,9 @@ namespace Waldo
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //In order to let ionic serve get info, we need to enable CORS
+            app.UseCors();
 
             app.UseAuthorization();
 
