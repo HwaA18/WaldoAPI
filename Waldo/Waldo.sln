@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waldo", "Waldo\Waldo.csproj", "{08C31E17-9677-484A-B72A-8EFAA15ACF2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waldo.Entity", "Waldo.Entity\Waldo.Entity.csproj", "{96690C69-E782-40D8-96F4-003A71BED241}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{08C31E17-9677-484A-B72A-8EFAA15ACF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08C31E17-9677-484A-B72A-8EFAA15ACF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08C31E17-9677-484A-B72A-8EFAA15ACF2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96690C69-E782-40D8-96F4-003A71BED241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96690C69-E782-40D8-96F4-003A71BED241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96690C69-E782-40D8-96F4-003A71BED241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96690C69-E782-40D8-96F4-003A71BED241}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
