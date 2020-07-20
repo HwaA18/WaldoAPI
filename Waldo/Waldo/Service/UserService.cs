@@ -8,10 +8,10 @@ namespace Waldo.Service
 {
     public class UserService
     {
-       public List<User> GetUsers()
-        {
-            List<User> users = new List<User>();
+       List<User> users = new List<User>();
 
+        public UserService()
+        {
             User x = new User();
             x.Username = "stang10";
             x.Password = "test1";
@@ -21,27 +21,41 @@ namespace Waldo.Service
             x.Username = "hwaa18";
             x.Password = "test2";
             users.Add(x);
-
-            return users;
-
         }
+
+        public List<User> GetUsers()
+       {
+            return users;
+       }
 
         public User GetUser(int UserId)
         {
-            User x = new User();
-            if (UserId == 1)
+            if (UserId < users.Count)
             {
-                x.Username = "stang10";
-                x.Password = "test1";
-                return x;
-            }
-            if (UserId == 2)
+                return users[UserId];
+            } else
             {
-                x.Username = "hwaa18";
-                x.Password = "test2";
-                return x;
+                return null;
             }
-            return null;
+        }
+
+        public Boolean AddUser(User newUser)
+        {
+            int count = users.Count;
+            //User x = new User();
+            //x.Username = username;
+            //x.Password = password;
+            //users.Add(x);
+
+            users.Add(newUser);
+            if (users.Count > count)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

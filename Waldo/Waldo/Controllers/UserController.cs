@@ -15,47 +15,66 @@ namespace Waldo.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
+        UserService MyService = new UserService();
+
         // GET: api/values
         [EnableCors("TestPolicy")]
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            UserService MyService = new UserService();
+            //UserService MyService = new UserService();
             return MyService.GetUsers();
         }
 
         // GET api/values/5
         [EnableCors("TestPolicy")]
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public string Get(int id)
         {
-            UserService MyService = new UserService();
+            //UserService MyService = new UserService();
             User myUser = MyService.GetUser(id);
             if (myUser == null)
             {
                 return "No User with that Id";
-            } else
+            }
+            else
             {
                 return "User: " + myUser.Username + " Pass: " + myUser.Password;
             }
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [EnableCors("TestPolicy")]
+        [HttpPost("post")]
+        public Boolean Post([FromBody] User value)
         {
-            throw new NotImplementedException();
+            //if (value == null)
+            //{
+            //    return false;
+            //} else
+            //{
+            //    return true;
+            //}
+            MyService.AddUser(value);
+            if (MyService.GetUser(2).Username == "ctang")
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
+        [HttpPut("put/{id}")]
         public void Put(int id, [FromBody] string value)
         {
             throw new NotImplementedException();
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public void Delete(int id)
         {
         }
