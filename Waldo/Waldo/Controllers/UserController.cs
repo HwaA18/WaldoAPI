@@ -56,14 +56,15 @@ namespace Waldo.Controllers
             //{
             //    return true;
             //}
-            MyService.AddUser(value);
-            if (MyService.GetUser(2).Username == "ctang")
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
+            return MyService.AddUser(value);
+            //if (MyService.GetUser(2).Username == "ctang")
+            //{
+            //    return true;
+            //} else
+            //{
+            //    return false;
+            //}
+
         }
 
         // PUT api/values/5
