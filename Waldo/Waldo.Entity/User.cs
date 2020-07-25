@@ -5,6 +5,9 @@ namespace Waldo.Entity
     {
         private String _Username { get; set; }
         private String _Password{ get; set; }
+        private String _FirstName { get; set; }
+        private String _LastName { get; set; }
+        private String _Address { get; set; }
 
         public String Username
         {
@@ -27,6 +30,42 @@ namespace Waldo.Entity
             set
             {
                 _Password = value;
+            }
+        }
+
+        public String FirstName
+        {
+            get
+            {
+                return _FirstName == null ? "" : _FirstName;
+            }
+            set
+            {
+                _FirstName = value;
+            }
+        }
+
+        public String LastName
+        {
+            get
+            {
+                return _LastName == null ? "" : _LastName;
+            }
+            set
+            {
+                _LastName = value;
+            }
+        }
+
+        public String Address
+        {
+            get
+            {
+                return _Address == null ? "" : _Address;
+            }
+            set
+            {
+                _Address = value;
             }
         }
     }

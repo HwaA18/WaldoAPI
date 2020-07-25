@@ -9,20 +9,6 @@ namespace Waldo.Service
 {
     public class UserService
     {
-       List<User> users = new List<User>();
-
-        public UserService()
-        {
-            User x = new User();
-            x.Username = "stang10";
-            x.Password = "test1";
-            users.Add(x);
-
-            x = new User();
-            x.Username = "hwaa18";
-            x.Password = "test2";
-            users.Add(x);
-        }
 
         public List<User> GetUsers()
        {
@@ -45,6 +31,9 @@ namespace Waldo.Service
                     s = new User();
                     s.Username = reader["Username"].ToString();
                     s.Password = reader["Password"].ToString();
+                    s.FirstName = reader["FirstName"].ToString();
+                    s.LastName = reader["LastName"].ToString();
+                    s.Address = reader["Address"].ToString();
                     lsUsers.Add(s);
                 }
             }
@@ -73,6 +62,9 @@ namespace Waldo.Service
                     User s = new User();
                     s.Username = reader["Username"].ToString();
                     s.Password = reader["Password"].ToString();
+                    s.FirstName = reader["FirstName"].ToString();
+                    s.LastName = reader["LastName"].ToString();
+                    s.Address = reader["Address"].ToString();
                     db.Close();
                     return s;
                 }
@@ -103,16 +95,23 @@ namespace Waldo.Service
 
             string user = newUser.Username;
             string pass = newUser.Password;
+            string first = newUser.FirstName;
+            string last = newUser.LastName;
+            string address = newUser.Address;
 
             using (SqlConnection db = new SqlConnection())
             {
                 db.ConnectionString = "Server=tcp:waldoserver.database.windows.net,1433;Initial Catalog=waldo;Persist Security Info=False;User ID=waldo;Password=1234@terp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
                 db.Open();
 
-                SqlCommand cmd = new SqlCommand("IF NOT EXISTS (SELECT * FROM Users WHERE Username = @Name) INSERT INTO Users(Username, Password) VALUES(@Name, @Pass)");
+                SqlCommand cmd = new SqlCommand("IF NOT EXISTS (SELECT * FROM Users WHERE Username = @Name) " +
+                    "INSERT INTO Users(Username, Password, FirstName, LastName, Address) VALUES(@Name, @Pass, @First, @Last, @Address)");
                 cmd.Connection = db;
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Name", DbType = System.Data.DbType.String, Value = user });
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Pass", DbType = System.Data.DbType.String, Value = pass });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@First", DbType = System.Data.DbType.String, Value = first });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Last", DbType = System.Data.DbType.String, Value = last });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Address", DbType = System.Data.DbType.String, Value = address });
                 cmd.ExecuteNonQuery();
             }
 
