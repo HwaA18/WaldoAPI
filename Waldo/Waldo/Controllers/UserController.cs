@@ -78,6 +78,7 @@ namespace Waldo.Controllers
         [HttpDelete("delete/{id}")]
         public void Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }
