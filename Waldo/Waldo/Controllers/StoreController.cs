@@ -27,7 +27,7 @@ namespace Waldo.Controllers
 
         // GET api/values/5
         [EnableCors("TestPolicy")]
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public string Get(int id)
         {
             Store myStore = MyService.GetStore(id);
@@ -42,21 +42,32 @@ namespace Waldo.Controllers
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [EnableCors("TestPolicy")]
+        [HttpPost("post")]
+        public Boolean Post([FromBody] Store value)
         {
+            try
+            {
+                return MyService.AddStore(value);
+            } catch (Exception e)
+            {
+                return false;
+            }
+            
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

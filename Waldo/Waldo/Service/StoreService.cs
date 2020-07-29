@@ -134,5 +134,105 @@ namespace Waldo.Service
 
             return null;
         }
+
+        public Boolean AddStore(Store newStore)
+        {
+            string name = newStore.Name;
+            string latitude = newStore.Latitude;
+            string longitude = newStore.Longitude;
+            string address = newStore.Address;
+            string reqMasks = newStore.MasksRequired;
+
+            string masks = newStore.Masks;
+            string gloves = newStore.Gloves;
+            string sanitizer = newStore.HandSanitizer;
+            string towels = newStore.PaperTowels;
+            string tp = newStore.ToiletPaper;
+            string liquid = newStore.LiquidSoap;
+            string bar = newStore.BarSoap;
+            string wipes = newStore.CleaningWipes;
+            string aerosol = newStore.AerosolDisinfectant;
+            string bleach = newStore.Bleach;
+            string flush = newStore.FlushableWipes;
+            string tissues = newStore.Tissues;
+            string diapers = newStore.Diapers;
+            string filters = newStore.WaterFilters;
+            string cold = newStore.ColdRemedies;
+            string cough = newStore.CoughRemedies;
+            string rubbingAlc = newStore.RubbingAlcohol;
+            string antiseptic = newStore.Antiseptic;
+            string thermometer = newStore.Thermometer;
+            string firstAid = newStore.FirstAidKit;
+            string bottles = newStore.WaterBottles;
+            string eggs = newStore.Eggs;
+            string milk = newStore.Milk;
+            string bread = newStore.Bread;
+            string beef = newStore.Beef;
+            string chicken = newStore.Chicken;
+            string pork = newStore.Pork;
+            string yeast = newStore.Yeast;
+
+
+            using (SqlConnection db = new SqlConnection())
+            {
+                db.ConnectionString = "Server=tcp:waldoserver.database.windows.net,1433;Initial Catalog=waldo;Persist Security Info=False;User ID=waldo;Password=1234@terp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+                db.Open();
+
+                SqlCommand cmd = new SqlCommand("IF EXISTS(SELECT * FROM Stores WHERE (Name = @Name AND Address = @Address AND Longitude = @Long AND Latitude = @Lat)) " +
+                    "UPDATE Stores SET Masks = @Masks, Gloves = @Gloves, HandSanitizer = @HandSanitizer, PaperTowels = @PaperTowels, " +
+                    "ToiletPaper  =  @ToiletPaper, LiquidSoap = @LiquidSoap, BarSoap = @BarSoap, CleaningWipes = @CleaningWipes, " +
+                    "AerosolDisinfectants = @AerosolDisinfectant, Bleach = @Bleach, FlushableWipes = @FlushableWipes, Tissues = @Tissues, " +
+                    "Diapers = @Diapers, WaterFilters = @WaterFilters, ColdRemedies = @ColdRemedies, RubbingAlcohol = @RubbingAlcohol, " +
+                    "Antiseptic = @Antiseptic, Thermometer = @Thermometer, FirstAidKit = @FirstAidKit, WaterBottles = @WaterBottles, Eggs = @Eggs, " +
+                    "Milk = @Milk, Bread = @Bread, Beef = @Beef, Chicken = @Chicken, Pork = @Pork, Yeast = @Yeast " +
+                    "WHERE (Name = @Name AND Address = @Address AND Longitude = @Long AND Latitude = @Lat)" +
+                    "ELSE INSERT INTO Stores(Name, Latitude, Longitude, Address, ReqMasks, Masks, Gloves, HandSanitizer, PaperTowels, " +
+                    "ToiletPaper, LiquidSoap, BarSoap, CleaningWipes, AerosolDisinfectants, Bleach, FlushableWipes, Tissues, Diapers, WaterFilters, ColdRemedies, RubbingAlcohol," +
+                    "Antiseptic, Thermometer, FirstAidKit, WaterBottles, Eggs, Milk, Bread, Beef, Chicken, Pork, Yeast) " +
+                    "VALUES(@Name, @Lat, @Long, @Address, @MasksRequired, @Masks, @Gloves, @HandSanitizer, @PaperTowels, @ToiletPaper, @LiquidSoap, @BarSoap, @CleaningWipes, " +
+                    "@AerosolDisinfectant, @Bleach, @FlushableWipes, @Tissues, @Diapers, @WaterFilters, @ColdRemedies, @RubbingAlcohol, " +
+                    "@Antiseptic, @Thermometer, @FirstAidKit, @WaterBottles, @Eggs, @Milk, @Bread, @Beef, @Chicken, @Pork, @Yeast)");
+
+                cmd.Connection = db;
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Name", DbType = System.Data.DbType.String, Value = name });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Lat", DbType = System.Data.DbType.String, Value = latitude });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Long", DbType = System.Data.DbType.String, Value = longitude });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Address", DbType = System.Data.DbType.String, Value = address });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@MasksRequired", DbType = System.Data.DbType.String, Value = reqMasks });
+
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Masks", DbType = System.Data.DbType.String, Value = masks});
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Gloves", DbType = System.Data.DbType.String, Value = gloves });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@HandSanitizer", DbType = System.Data.DbType.String, Value = sanitizer });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@PaperTowels", DbType = System.Data.DbType.String, Value = towels });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@ToiletPaper", DbType = System.Data.DbType.String, Value = tp });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@LiquidSoap", DbType = System.Data.DbType.String, Value = liquid });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@BarSoap", DbType = System.Data.DbType.String, Value = bar });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@CleaningWipes", DbType = System.Data.DbType.String, Value = wipes });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@AerosolDisinfectant", DbType = System.Data.DbType.String, Value = aerosol });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Bleach", DbType = System.Data.DbType.String, Value = bleach });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@FlushableWipes", DbType = System.Data.DbType.String, Value = flush });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Tissues", DbType = System.Data.DbType.String, Value = tissues });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Diapers", DbType = System.Data.DbType.String, Value = diapers });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@WaterFilters", DbType = System.Data.DbType.String, Value = filters });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@ColdRemedies", DbType = System.Data.DbType.String, Value = cold });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@CoughRemedies", DbType = System.Data.DbType.String, Value = cough });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@RubbingAlcohol", DbType = System.Data.DbType.String, Value = rubbingAlc });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Antiseptic", DbType = System.Data.DbType.String, Value = antiseptic });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Thermometer", DbType = System.Data.DbType.String, Value = thermometer });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@FirstAidKit", DbType = System.Data.DbType.String, Value = firstAid });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@WaterBottles", DbType = System.Data.DbType.String, Value = bottles });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Eggs", DbType = System.Data.DbType.String, Value = eggs });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Milk", DbType = System.Data.DbType.String, Value = milk });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Bread", DbType = System.Data.DbType.String, Value = bread });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Beef", DbType = System.Data.DbType.String, Value = beef });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Chicken", DbType = System.Data.DbType.String, Value = chicken });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Pork", DbType = System.Data.DbType.String, Value = pork });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Yeast", DbType = System.Data.DbType.String, Value = yeast });
+
+                cmd.ExecuteNonQuery();
+            }
+
+            return true;
+        }
     }
 }
