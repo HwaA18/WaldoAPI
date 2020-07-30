@@ -179,7 +179,7 @@ namespace Waldo.Service
                 db.Open();
 
                 SqlCommand cmd = new SqlCommand("IF EXISTS(SELECT * FROM Stores WHERE (Name = @Name AND Address = @Address AND Longitude = @Long AND Latitude = @Lat)) " +
-                    "UPDATE Stores SET Masks = @Masks, Gloves = @Gloves, HandSanitizer = @HandSanitizer, PaperTowels = @PaperTowels, " +
+                    "UPDATE Stores SET ReqMasks = @MasksRequired, Masks = @Masks, Gloves = @Gloves, HandSanitizer = @HandSanitizer, PaperTowels = @PaperTowels, " +
                     "ToiletPaper  =  @ToiletPaper, LiquidSoap = @LiquidSoap, BarSoap = @BarSoap, CleaningWipes = @CleaningWipes, " +
                     "AerosolDisinfectants = @AerosolDisinfectant, Bleach = @Bleach, FlushableWipes = @FlushableWipes, Tissues = @Tissues, " +
                     "Diapers = @Diapers, WaterFilters = @WaterFilters, ColdRemedies = @ColdRemedies, RubbingAlcohol = @RubbingAlcohol, " +
