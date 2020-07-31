@@ -63,6 +63,8 @@ namespace Waldo.Service
                     s.Chicken = reader["Chicken"].ToString();
                     s.Pork = reader["Pork"].ToString();
                     s.Yeast = reader["Yeast"].ToString();
+                    s.ReportedBy = reader["ReportedBy"].ToString();
+                    s.Timestamp = reader["Timestamp"].ToString();
 
                     lsStores.Add(s);
                 }
@@ -124,6 +126,8 @@ namespace Waldo.Service
                     s.Chicken = reader["Chicken"].ToString();
                     s.Pork = reader["Pork"].ToString();
                     s.Yeast = reader["Yeast"].ToString();
+                    s.ReportedBy = reader["ReportedBy"].ToString();
+                    s.Timestamp = reader["Timestamp"].ToString();
 
                     db.Close();
                     return s;
@@ -171,6 +175,8 @@ namespace Waldo.Service
             string chicken = newStore.Chicken;
             string pork = newStore.Pork;
             string yeast = newStore.Yeast;
+            string by = newStore.ReportedBy;
+            string time = newStore.Timestamp;
 
 
             using (SqlConnection db = new SqlConnection())
@@ -182,16 +188,16 @@ namespace Waldo.Service
                     "UPDATE Stores SET ReqMasks = @MasksRequired, Masks = @Masks, Gloves = @Gloves, HandSanitizer = @HandSanitizer, PaperTowels = @PaperTowels, " +
                     "ToiletPaper  =  @ToiletPaper, LiquidSoap = @LiquidSoap, BarSoap = @BarSoap, CleaningWipes = @CleaningWipes, " +
                     "AerosolDisinfectants = @AerosolDisinfectant, Bleach = @Bleach, FlushableWipes = @FlushableWipes, Tissues = @Tissues, " +
-                    "Diapers = @Diapers, WaterFilters = @WaterFilters, ColdRemedies = @ColdRemedies, RubbingAlcohol = @RubbingAlcohol, " +
+                    "Diapers = @Diapers, WaterFilters = @WaterFilters, ColdRemedies = @ColdRemedies, CoughRemedies = @CoughRemedies, RubbingAlcohol = @RubbingAlcohol, " +
                     "Antiseptic = @Antiseptic, Thermometer = @Thermometer, FirstAidKit = @FirstAidKit, WaterBottles = @WaterBottles, Eggs = @Eggs, " +
-                    "Milk = @Milk, Bread = @Bread, Beef = @Beef, Chicken = @Chicken, Pork = @Pork, Yeast = @Yeast " +
+                    "Milk = @Milk, Bread = @Bread, Beef = @Beef, Chicken = @Chicken, Pork = @Pork, Yeast = @Yeast, ReportedBy = @By, Timestamp = @Time " +
                     "WHERE (Name = @Name AND Address = @Address AND Longitude = @Long AND Latitude = @Lat)" +
                     "ELSE INSERT INTO Stores(Name, Latitude, Longitude, Address, ReqMasks, Masks, Gloves, HandSanitizer, PaperTowels, " +
-                    "ToiletPaper, LiquidSoap, BarSoap, CleaningWipes, AerosolDisinfectants, Bleach, FlushableWipes, Tissues, Diapers, WaterFilters, ColdRemedies, RubbingAlcohol," +
-                    "Antiseptic, Thermometer, FirstAidKit, WaterBottles, Eggs, Milk, Bread, Beef, Chicken, Pork, Yeast) " +
+                    "ToiletPaper, LiquidSoap, BarSoap, CleaningWipes, AerosolDisinfectants, Bleach, FlushableWipes, Tissues, Diapers, WaterFilters, ColdRemedies, CoughRemedies, RubbingAlcohol," +
+                    "Antiseptic, Thermometer, FirstAidKit, WaterBottles, Eggs, Milk, Bread, Beef, Chicken, Pork, Yeast, ReportedBy, Timestamp) " +
                     "VALUES(@Name, @Lat, @Long, @Address, @MasksRequired, @Masks, @Gloves, @HandSanitizer, @PaperTowels, @ToiletPaper, @LiquidSoap, @BarSoap, @CleaningWipes, " +
-                    "@AerosolDisinfectant, @Bleach, @FlushableWipes, @Tissues, @Diapers, @WaterFilters, @ColdRemedies, @RubbingAlcohol, " +
-                    "@Antiseptic, @Thermometer, @FirstAidKit, @WaterBottles, @Eggs, @Milk, @Bread, @Beef, @Chicken, @Pork, @Yeast)");
+                    "@AerosolDisinfectant, @Bleach, @FlushableWipes, @Tissues, @Diapers, @WaterFilters, @ColdRemedies, @CoughRemedies, @RubbingAlcohol, " +
+                    "@Antiseptic, @Thermometer, @FirstAidKit, @WaterBottles, @Eggs, @Milk, @Bread, @Beef, @Chicken, @Pork, @Yeast, @By, @Time)");
 
                 cmd.Connection = db;
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Name", DbType = System.Data.DbType.String, Value = name });
@@ -228,6 +234,8 @@ namespace Waldo.Service
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Chicken", DbType = System.Data.DbType.String, Value = chicken });
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Pork", DbType = System.Data.DbType.String, Value = pork });
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Yeast", DbType = System.Data.DbType.String, Value = yeast });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@By", DbType = System.Data.DbType.String, Value = by });
+                cmd.Parameters.Add(new SqlParameter { ParameterName = "@Time", DbType = System.Data.DbType.String, Value = time });
 
                 cmd.ExecuteNonQuery();
             }

@@ -39,6 +39,8 @@ namespace Waldo.Entity
         public String Pork { get; set; }
         public String Yeast { get; set; }
 
+        public String ReportedBy { get; set; }
+        public String Timestamp { get; set; }
 
         public Store()
         {
