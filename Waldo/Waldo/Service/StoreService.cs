@@ -12,16 +12,19 @@ namespace Waldo.Service
 
         public List<Store> GetStores()
         {
+            //Create a list of Store objects
             List<Store> lsStores = new List<Store>();
 
+            //Establish connection to our SQL Database, selects all stores from the table, and allows us to read what is returned
             SqlConnection db =
                 new SqlConnection("Server=tcp:waldoserver.database.windows.net,1433;Initial Catalog=waldo;Persist Security Info=False;User ID=waldo;Password=1234@terp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             db.Open();
-
             SqlCommand cmd = new SqlCommand("SELECT * FROM Stores");
             cmd.Connection = db;
             SqlDataReader reader = cmd.ExecuteReader();
 
+            //If any information is returned by the Store table, a store object is created with the information
+            //from the database columns and added to the list
             if (reader != null)
             {
                 Store s = null;
@@ -70,6 +73,7 @@ namespace Waldo.Service
                 }
             }
 
+            //The connection to the database is closed and the list of stores is returned
             db.Close();
 
             return lsStores;
@@ -77,16 +81,16 @@ namespace Waldo.Service
 
         public Store GetStore(int StoreId)
         {
+            //Establish connection to our SQL Database, selects the store with the id variable from the store table, and allows us to read what is returned
             SqlConnection db =
                 new SqlConnection("Server=tcp:waldoserver.database.windows.net,1433;Initial Catalog=waldo;Persist Security Info=False;User ID=waldo;Password=1234@terp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             db.Open();
-
             SqlCommand cmd = new SqlCommand("SELECT * FROM Stores WHERE StoreId = @StoreId");
             cmd.Parameters.Add(new SqlParameter { ParameterName = "@StoreId", DbType = System.Data.DbType.Int32, Value = StoreId });
-
             cmd.Connection = db;
             SqlDataReader reader = cmd.ExecuteReader();
 
+            //If a store is returned by the table, its information from the columns is recorded, the database connection is closed, and the store is returned
             if (reader != null)
             {
                 if (reader.Read())
@@ -134,6 +138,7 @@ namespace Waldo.Service
                 }
             }
 
+            //If no store is returned by the table, the database connection is closed and null is returned
             db.Close();
 
             return null;
@@ -141,12 +146,12 @@ namespace Waldo.Service
 
         public Boolean AddStore(Store newStore)
         {
+            //The fields of the supplied store are obtained
             string name = newStore.Name;
             string latitude = newStore.Latitude;
             string longitude = newStore.Longitude;
             string address = newStore.Address;
             string reqMasks = newStore.MasksRequired;
-
             string masks = newStore.Masks;
             string gloves = newStore.Gloves;
             string sanitizer = newStore.HandSanitizer;
@@ -178,12 +183,16 @@ namespace Waldo.Service
             string by = newStore.ReportedBy;
             string time = newStore.Timestamp;
 
-
+            //A connection to our SQL Database is opened
             using (SqlConnection db = new SqlConnection())
             {
                 db.ConnectionString = "Server=tcp:waldoserver.database.windows.net,1433;Initial Catalog=waldo;Persist Security Info=False;User ID=waldo;Password=1234@terp;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
                 db.Open();
 
+                /*
+                 * If a current store exists with the name, address, and coordinates supplied then the rest of the fields are updated with the supplied information.
+                 * If a store does not exist with the supplied name, address, and coordinates then a new store is added to the database with the supplied information.
+                 */
                 SqlCommand cmd = new SqlCommand("IF EXISTS(SELECT * FROM Stores WHERE (Name = @Name AND Address = @Address AND Longitude = @Long AND Latitude = @Lat)) " +
                     "UPDATE Stores SET ReqMasks = @MasksRequired, Masks = @Masks, Gloves = @Gloves, HandSanitizer = @HandSanitizer, PaperTowels = @PaperTowels, " +
                     "ToiletPaper  =  @ToiletPaper, LiquidSoap = @LiquidSoap, BarSoap = @BarSoap, CleaningWipes = @CleaningWipes, " +
@@ -198,14 +207,14 @@ namespace Waldo.Service
                     "VALUES(@Name, @Lat, @Long, @Address, @MasksRequired, @Masks, @Gloves, @HandSanitizer, @PaperTowels, @ToiletPaper, @LiquidSoap, @BarSoap, @CleaningWipes, " +
                     "@AerosolDisinfectant, @Bleach, @FlushableWipes, @Tissues, @Diapers, @WaterFilters, @ColdRemedies, @CoughRemedies, @RubbingAlcohol, " +
                     "@Antiseptic, @Thermometer, @FirstAidKit, @WaterBottles, @Eggs, @Milk, @Bread, @Beef, @Chicken, @Pork, @Yeast, @By, @Time)");
-
                 cmd.Connection = db;
+
+                //Each of the fields of the supplied store object is turned into a SQL parameter to be used in the above query
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Name", DbType = System.Data.DbType.String, Value = name });
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Lat", DbType = System.Data.DbType.String, Value = latitude });
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Long", DbType = System.Data.DbType.String, Value = longitude });
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Address", DbType = System.Data.DbType.String, Value = address });
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@MasksRequired", DbType = System.Data.DbType.String, Value = reqMasks });
-
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Masks", DbType = System.Data.DbType.String, Value = masks});
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@Gloves", DbType = System.Data.DbType.String, Value = gloves });
                 cmd.Parameters.Add(new SqlParameter { ParameterName = "@HandSanitizer", DbType = System.Data.DbType.String, Value = sanitizer });
@@ -240,6 +249,7 @@ namespace Waldo.Service
                 cmd.ExecuteNonQuery();
             }
 
+            //true is returned upon successful query
             return true;
         }
     }

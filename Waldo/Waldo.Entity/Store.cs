@@ -3,13 +3,14 @@ namespace Waldo.Entity
 {
     public class Store
     {
+        //Each of these fields are used to identify a store in our Store table 
         public String Name { get; set; }
         public String Latitude { get; set; }
         public String Longitude { get; set; }
         public String Address { get; set; }
-        public String MasksRequired { get; set; }
 
-        //Goods
+        //Each of these fields are those populated in the report about stores
+        public String MasksRequired { get; set; }
         public String Masks { get; set; }
         public String Gloves { get; set; }
         public String HandSanitizer { get; set; }
@@ -39,11 +40,9 @@ namespace Waldo.Entity
         public String Pork { get; set; }
         public String Yeast { get; set; }
 
+        //These fields are used to record information about who and when the report is filed
         public String ReportedBy { get; set; }
         public String Timestamp { get; set; }
 
-        public Store()
-        {
-        }
     }
 }

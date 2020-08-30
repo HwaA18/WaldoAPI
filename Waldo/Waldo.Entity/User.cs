@@ -3,12 +3,14 @@ namespace Waldo.Entity
 {
     public class User
     {
+        //Each of these private fields correspond to the columns of our User table
         private String _Username { get; set; }
         private String _Password{ get; set; }
         private String _FirstName { get; set; }
         private String _LastName { get; set; }
         private String _Address { get; set; }
 
+        //Establish get and set methods for the public variables accessed by our UserService
         public String Username
         {
             get

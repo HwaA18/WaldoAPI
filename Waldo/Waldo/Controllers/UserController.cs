@@ -11,44 +11,52 @@ using Waldo.Service;
 
 namespace Waldo.Controllers
 {
+    //Route sets so that the url matches https://waldofind.azurewebsites.net/user
     [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
 
+        //Established our UserService which communicates with our SQL database
         UserService MyService = new UserService();
 
-        // GET: api/values
+        // GET
+        //Needed the TestPolicy for Cors when running localhost tests
         [EnableCors("TestPolicy")]
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            //UserService MyService = new UserService();
+            //Returns a list of all the users we have info on in the database
             return MyService.GetUsers();
         }
 
-        // GET api/values/5
+        // GET /get/5
+        //Needed the TestPolicy for Cors when running localhost tests
         [EnableCors("TestPolicy")]
         [HttpGet("get/{id}")]
         public string Get(int id)
         {
-            //UserService MyService = new UserService();
+            //Gets the user from our database with the store id entered
             User myUser = MyService.GetUser(id);
+            //Displays a no user message if it does not exist
             if (myUser == null)
             {
                 return "No User with that Id";
             }
+            //Displays the user's username and password if it exists
             else
             {
                 return "User: " + myUser.Username + " Pass: " + myUser.Password;
             }
         }
 
-        // POST api/values
+        // POST /post
+        //Needed the TestPolicy for Cors when running localhost tests
         [EnableCors("TestPolicy")]
         [HttpPost("post")]
         public Boolean Post([FromBody] User value)
         {
+            //Will return true if successfully added the store provided or false if an error occurred
             try
             {
                 return MyService.AddUser(value);
@@ -58,6 +66,8 @@ namespace Waldo.Controllers
                 return false;
             }
         }
+
+        //PUT and DELETE were not implemented as they were not fit for our program
 
         // PUT api/values/5
         [HttpPut("put/{id}")]
